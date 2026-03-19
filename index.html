@@ -1,0 +1,1246 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zentrix | Software • Technology • Solutions</title>
+    <meta name="description"
+        content="Zentrix delivers end-to-end technology solutions — from product ideation to deployment — for ambitious businesses.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap"
+        rel="stylesheet">
+
+    <style>
+        /* ==========================================================================
+           1. CSS VARIABLES & SYSTEM
+           ========================================================================== */
+        :root {
+            /* Brand Colors */
+            --bg-primary: #f7f4ef;
+            --bg-secondary: #efeae2;
+            --bg-card: #faf8f5;
+            --text-primary: #2b2318;
+            --text-secondary: #6b5e52;
+            --text-muted: #9e9087;
+            --accent-primary: #4a3728;
+            --accent-hover: #6b4f38;
+            --accent-line: #c4a882;
+            --sketch-stroke: #8c7b6b;
+            --whatsapp: #25D366;
+
+            /* Layout & Spacing */
+            --max-width: 1200px;
+            --spacing-desktop: 120px;
+            --spacing-mobile: 64px;
+
+            /* UI Elements */
+            --radius-sm: 4px;
+            --radius-md: 8px;
+            --radius-lg: 12px;
+            --shadow-soft: 0 2px 24px rgba(43, 35, 24, 0.07);
+            --transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        /* ==========================================================================
+           2. RESET & GLOBAL STYLES
+           ========================================================================== */
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            font-size: 16px;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            color: var(--text-primary);
+            background-color: var(--bg-primary);
+            line-height: 1.75;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Subtle Paper Texture via CSS Noise */
+        body::after {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.04'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        /* Typography Base */
+        h1,
+        h2,
+        .font-playfair {
+            font-family: 'Playfair Display', serif;
+        }
+
+        .font-caveat {
+            font-family: 'Caveat', cursive;
+        }
+
+        .container {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 14px 32px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 16px;
+            font-weight: 500;
+            text-decoration: none;
+            border-radius: var(--radius-sm);
+            transition: var(--transition);
+            cursor: pointer;
+            border: 1px solid transparent;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .btn--primary {
+            background-color: var(--accent-primary);
+            color: var(--bg-primary);
+        }
+
+        .btn--primary:hover {
+            background-color: var(--accent-hover);
+            box-shadow: 0 8px 16px rgba(74, 55, 40, 0.15);
+        }
+
+        .btn--ghost {
+            background-color: transparent;
+            color: var(--accent-primary);
+            border-color: var(--accent-primary);
+        }
+
+        .btn--ghost:hover {
+            background-color: rgba(74, 55, 40, 0.05);
+        }
+
+        .btn--whatsapp {
+            background-color: var(--whatsapp);
+            color: #fff;
+        }
+
+        .btn--whatsapp:hover {
+            background-color: #20bd5a;
+            box-shadow: 0 8px 16px rgba(37, 211, 102, 0.2);
+        }
+
+        .btn--cream-ghost {
+            background-color: transparent;
+            color: var(--bg-primary);
+            border-color: var(--bg-primary);
+        }
+
+        .btn--cream-ghost:hover {
+            background-color: rgba(247, 244, 239, 0.1);
+        }
+
+        /* Scroll Reveal Utility */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ==========================================================================
+           3. NAVBAR
+           ========================================================================== */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 24px 0;
+            transition: var(--transition);
+        }
+
+        .navbar.scrolled {
+            padding: 16px 0;
+            background-color: rgba(247, 244, 239, 0.85);
+            /* --bg-primary with opacity */
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--accent-line);
+        }
+
+        .navbar__inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar__logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: var(--text-primary);
+        }
+
+        .navbar__logo-svg {
+            width: 32px;
+            height: 32px;
+            color: var(--accent-primary);
+        }
+
+        .navbar__logo-text {
+            font-family: 'Playfair Display', serif;
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        .navbar__links {
+            display: flex;
+            gap: 40px;
+            align-items: center;
+            list-style: none;
+        }
+
+        .navbar__link {
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-weight: 500;
+            font-size: 15px;
+            transition: var(--transition);
+        }
+
+        .navbar__link:hover,
+        .navbar__link.active {
+            color: var(--accent-primary);
+        }
+
+        .navbar__toggle {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 8px;
+        }
+
+        .navbar__toggle span {
+            display: block;
+            width: 24px;
+            height: 2px;
+            background-color: var(--accent-primary);
+            margin: 5px 0;
+            transition: var(--transition);
+        }
+
+        /* ==========================================================================
+           4. HERO SECTION
+           ========================================================================== */
+        .hero {
+            padding-top: 180px;
+            padding-bottom: var(--spacing-desktop);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+        }
+
+        .hero__grid {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 64px;
+            align-items: center;
+        }
+
+        .hero__eyebrow {
+            color: var(--text-muted);
+            font-size: 22px;
+            display: block;
+            margin-bottom: 16px;
+        }
+
+        .hero__title {
+            font-size: 72px;
+            line-height: 1.1;
+            color: var(--text-primary);
+            margin-bottom: 24px;
+            letter-spacing: -0.02em;
+        }
+
+        .hero__subtitle {
+            font-size: 18px;
+            color: var(--text-secondary);
+            max-width: 540px;
+            margin-bottom: 40px;
+        }
+
+        .hero__actions {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+
+        .hero__trust {
+            display: flex;
+            gap: 24px;
+            color: var(--text-muted);
+            font-size: 13px;
+            font-weight: 500;
+            letter-spacing: 0.04em;
+        }
+
+        .hero__trust span {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .hero__visual {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            aspect-ratio: 1;
+        }
+
+        .hero__visual-bg {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 120%;
+            height: 120%;
+            background-image: radial-gradient(var(--accent-line) 1px, transparent 1px);
+            background-size: 24px 24px;
+            opacity: 0.2;
+            z-index: -1;
+            border-radius: 50%;
+        }
+
+        .z-sketch {
+            width: 100%;
+            max-width: 320px;
+            overflow: visible;
+        }
+
+        .z-path {
+            fill: none;
+            stroke: var(--accent-primary);
+            stroke-width: 4;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            stroke-dasharray: 2000;
+            stroke-dashoffset: 2000;
+        }
+
+        .z-path-light {
+            fill: none;
+            stroke: var(--sketch-stroke);
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            stroke-dasharray: 2000;
+            stroke-dashoffset: 2000;
+            opacity: 0.6;
+        }
+
+        .hero.animated .z-path {
+            animation: drawZ 2s ease-in-out forwards;
+        }
+
+        .hero.animated .z-path-light {
+            animation: drawZ 2s ease-in-out 0.2s forwards;
+        }
+
+        @keyframes drawZ {
+            to {
+                stroke-dashoffset: 0;
+            }
+        }
+
+        /* ==========================================================================
+           5. SERVICES SECTION
+           ========================================================================== */
+        .services {
+            padding: var(--spacing-desktop) 0;
+            background-color: var(--bg-primary);
+            border-top: 1px solid var(--accent-line);
+        }
+
+        .section-header {
+            margin-bottom: 64px;
+        }
+
+        .section-header h2 {
+            font-size: 42px;
+            line-height: 1.2;
+            margin-bottom: 16px;
+        }
+
+        .section-header p {
+            color: var(--text-secondary);
+            font-size: 18px;
+            max-width: 600px;
+        }
+
+        .services__grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 32px;
+        }
+
+        .service-card {
+            background-color: var(--bg-card);
+            padding: 40px 32px;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-soft);
+            transition: var(--transition);
+            border-left: 0 solid var(--accent-primary);
+            position: relative;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .service-card:hover {
+            transform: translateY(-6px);
+            border-left: 3px solid var(--accent-primary);
+        }
+
+        .service-card__icon {
+            width: 32px;
+            height: 32px;
+            margin-bottom: 24px;
+            color: var(--accent-primary);
+            transition: transform 0.3s ease;
+        }
+
+        .service-card:hover .service-card__icon {
+            transform: rotate(5deg) scale(1.05);
+        }
+
+        .service-card h3 {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .service-card p {
+            color: var(--text-secondary);
+            font-size: 15px;
+            margin-bottom: 24px;
+            line-height: 1.6;
+        }
+
+        .service-card__link {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--accent-primary);
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .service-card__link svg {
+            width: 16px;
+            height: 16px;
+            transition: transform 0.2s;
+        }
+
+        .service-card:hover .service-card__link svg {
+            transform: translateX(4px);
+        }
+
+        /* ==========================================================================
+           6. ABOUT FOUNDER SECTION
+           ========================================================================== */
+        .about {
+            padding: var(--spacing-desktop) 0;
+            background-color: var(--bg-secondary);
+        }
+
+        .about__grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+        }
+
+        .about__eyebrow {
+            color: var(--text-muted);
+            font-size: 13px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-bottom: 16px;
+            display: block;
+        }
+
+        .about__content h2 {
+            font-size: 42px;
+            margin-bottom: 24px;
+            line-height: 1.2;
+        }
+
+        .about__content p {
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+            font-size: 16px;
+        }
+
+        .about__signature {
+            font-size: 32px;
+            color: var(--accent-primary);
+            margin: 32px 0;
+            display: block;
+        }
+
+        .about__stats {
+            display: flex;
+            gap: 24px;
+            flex-wrap: wrap;
+            padding-top: 32px;
+            border-top: 1px solid var(--accent-line);
+            font-size: 14px;
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        .about__stats span {
+            color: var(--text-muted);
+            margin: 0 8px;
+        }
+
+        .about__image-wrapper {
+            position: relative;
+            padding: 20px;
+        }
+
+        .about__image {
+            width: 100%;
+            aspect-ratio: 4 / 5;
+            background-color: #dcd6ce;
+            /* Sepia placeholder tone */
+            border-radius: var(--radius-lg);
+            position: relative;
+            z-index: 2;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+
+        /* If placing an actual img tag inside .about__image */
+        .about__image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: sepia(0.3) contrast(0.9) brightness(0.9);
+        }
+
+        .about__image-wrapper::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border: 1px dashed var(--accent-line);
+            border-radius: var(--radius-lg);
+            transform: translate(20px, 20px);
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        /* ==========================================================================
+           7. TRUST SECTION
+           ========================================================================== */
+        .trust {
+            padding: 80px 0;
+            background-color: var(--bg-primary);
+            border-bottom: 1px solid var(--accent-line);
+        }
+
+        .trust__grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 48px;
+        }
+
+        .trust__item {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .trust__icon {
+            width: 32px;
+            height: 32px;
+            color: var(--accent-primary);
+        }
+
+        .trust__item h3 {
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .trust__item p {
+            font-size: 15px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* ==========================================================================
+           8. CTA SECTION
+           ========================================================================== */
+        .cta {
+            background-color: var(--text-primary);
+            /* Dark espresso/charcoal */
+            color: var(--bg-primary);
+            padding: 120px 0;
+            text-align: center;
+        }
+
+        .cta h2 {
+            font-size: 48px;
+            margin-bottom: 16px;
+            color: var(--bg-primary);
+        }
+
+        .cta p {
+            color: var(--text-muted);
+            font-size: 18px;
+            margin-bottom: 48px;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta__buttons {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            margin-bottom: 24px;
+        }
+
+        .cta__note {
+            font-size: 13px;
+            color: var(--text-muted);
+            letter-spacing: 0.05em;
+        }
+
+        /* ==========================================================================
+           9. FOOTER
+           ========================================================================== */
+        .footer {
+            background-color: var(--bg-primary);
+            padding: 80px 0 40px;
+            border-top: 1px solid var(--accent-line);
+        }
+
+        .footer__grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 64px;
+            margin-bottom: 64px;
+        }
+
+        .footer__logo-text {
+            font-family: 'Playfair Display', serif;
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--accent-primary);
+            display: block;
+            margin-bottom: 16px;
+        }
+
+        .footer__tagline {
+            color: var(--text-secondary);
+            font-size: 15px;
+        }
+
+        .footer__col h4 {
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--text-primary);
+            margin-bottom: 24px;
+        }
+
+        .footer__links {
+            list-style: none;
+        }
+
+        .footer__links li {
+            margin-bottom: 12px;
+        }
+
+        .footer__links a {
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-size: 15px;
+            transition: color 0.2s;
+        }
+
+        .footer__links a:hover {
+            color: var(--accent-primary);
+        }
+
+        .footer__bottom {
+            padding-top: 32px;
+            border-top: 1px solid var(--accent-line);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        /* ==========================================================================
+           10. RESPONSIVE DESIGN (MOBILE FIRST OVERRIDES)
+           ========================================================================== */
+        @media (max-width: 1024px) {
+            .hero__title {
+                font-size: 56px;
+            }
+
+            .services__grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .about__grid {
+                gap: 48px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            :root {
+                --spacing-desktop: var(--spacing-mobile);
+            }
+
+            /* Navbar Mobile */
+            .navbar__toggle {
+                display: block;
+                z-index: 1001;
+                position: relative;
+            }
+
+            .navbar__toggle.open span:nth-child(1) {
+                transform: translateY(7px) rotate(45deg);
+            }
+
+            .navbar__toggle.open span:nth-child(2) {
+                opacity: 0;
+            }
+
+            .navbar__toggle.open span:nth-child(3) {
+                transform: translateY(-7px) rotate(-45deg);
+            }
+
+            .navbar__links {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100vw;
+                height: 100vh;
+                background-color: var(--bg-primary);
+                flex-direction: column;
+                justify-content: center;
+                gap: 32px;
+                opacity: 0;
+                pointer-events: none;
+                transition: opacity 0.3s ease;
+                z-index: 1000;
+            }
+
+            .navbar__links.active {
+                opacity: 1;
+                pointer-events: all;
+            }
+
+            .navbar__links .btn {
+                display: none;
+            }
+
+            /* Hide desktop CTA in mobile nav */
+
+            /* Hero Mobile */
+            .hero {
+                padding-top: 140px;
+                text-align: center;
+            }
+
+            .hero__grid {
+                grid-template-columns: 1fr;
+                gap: 48px;
+            }
+
+            .hero__title {
+                font-size: 42px;
+            }
+
+            .hero__subtitle {
+                margin: 0 auto 32px;
+            }
+
+            .hero__actions {
+                flex-direction: column;
+                justify-content: center;
+                width: 100%;
+                max-width: 300px;
+                margin: 0 auto 32px;
+            }
+
+            .hero__trust {
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+
+            .hero__visual {
+                order: -1;
+                max-width: 250px;
+                margin: 0 auto;
+            }
+
+            /* Image on top on mobile */
+
+            /* Sections Mobile */
+            .services__grid,
+            .about__grid,
+            .trust__grid,
+            .footer__grid {
+                grid-template-columns: 1fr;
+            }
+
+            .about__image-wrapper {
+                order: -1;
+                max-width: 400px;
+                margin: 0 auto;
+            }
+
+            .about__stats {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .about__stats span {
+                display: none;
+            }
+
+            .cta h2 {
+                font-size: 36px;
+            }
+
+            .cta__buttons {
+                flex-direction: column;
+                max-width: 300px;
+                margin: 0 auto 24px;
+            }
+
+            .footer__grid {
+                gap: 40px;
+            }
+
+            .footer__bottom {
+                flex-direction: column;
+                gap: 16px;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="navbar" id="navbar">
+        <div class="container navbar__inner">
+            <a href="#" class="navbar__logo" aria-label="Zentrix Home">
+                <svg class="navbar__logo-svg" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="4"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M25 30 L 75 30 L 25 70 L 75 70" />
+                </svg>
+                <span class="navbar__logo-text">Zentrix</span>
+            </a>
+
+            <button class="navbar__toggle" id="mobile-menu-btn" aria-label="Toggle menu">
+                <span></span><span></span><span></span>
+            </button>
+
+            <ul class="navbar__links" id="nav-links">
+                <li><a href="#home" class="navbar__link">Home</a></li>
+                <li><a href="#services" class="navbar__link">Services</a></li>
+                <li><a href="#about" class="navbar__link">About</a></li>
+                <li><a href="#contact" class="navbar__link">Contact</a></li>
+                <li class="mobile-cta-wrapper"><a href="#contact" class="btn btn--primary">Start a Project</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero animated" id="home">
+            <div class="container hero__grid">
+                <div class="hero__content reveal">
+                    <span class="hero__eyebrow font-caveat">Est. 2024 · Nagercoil, India</span>
+                    <h1 class="hero__title">We Build Software That Moves Your Business Forward.</h1>
+                    <p class="hero__subtitle">Zentrix delivers end-to-end technology solutions — from product ideation
+                        to deployment — for ambitious businesses across India.</p>
+
+                    <div class="hero__actions">
+                        <a href="#contact" class="btn btn--primary">Start a Project &rarr;</a>
+                        <a href="#services" class="btn btn--ghost">View Our Work</a>
+                    </div>
+
+                    <div class="hero__trust">
+                        <span>✓ Custom Built</span>
+                        <span>✓ On-Time Delivery</span>
+                        <span>✓ Founder-Led</span>
+                    </div>
+                </div>
+
+                <div class="hero__visual reveal">
+                    <div class="hero__visual-bg"></div>
+                    <svg class="z-sketch" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                        <path class="z-path-light"
+                            d="M48 58 C 80 55, 120 52, 155 56 L 50 148 C 80 145, 120 142, 155 146" />
+                        <path class="z-path" d="M45 60 L 150 60 L 55 150 L 160 150" />
+                    </svg>
+                </div>
+            </div>
+        </section>
+
+        <section class="services" id="services">
+            <div class="container">
+                <div class="section-header reveal">
+                    <h2>What We Build</h2>
+                    <p>End-to-end software solutions tailored for modern businesses. We combine technical rigor with
+                        human-centered design.</p>
+                </div>
+
+                <div class="services__grid">
+                    <a href="#contact" class="service-card reveal">
+                        <svg class="service-card__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                            stroke-width="1.5">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M14.25 9.75L16.5 12l-2.25 2.25m-4.5 0L7.5 12l2.25-2.25M6 20.25h12A2.25 2.25 0 0020.25 18V6A2.25 2.25 0 0018 3.75H6A2.25 2.25 0 003.75 6v12A2.25 2.25 0 006 20.25z" />
+                        </svg>
+                        <h3>Web Application Development</h3>
+                        <p>High-performance, scalable web platforms built with modern, future-proof architectures.</p>
+                        <span class="service-card__link">Learn more <svg viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd"
+                                    d="M3 10a.75.75 0 01.75-.75h10.638L10.23 5.29a.75.75 0 111.04-1.08l5.5 5.25a.75.75 0 010 1.08l-5.5 5.25a.75.75 0 11-1.04-1.08l4.158-3.96H3.75A.75.75 0 013 10z"
+                                    clip-rule="evenodd" />
+                            </svg></span>
+                    </a>
+
+                    <a href="#contact" class="service-card reveal" style="transition-delay: 100ms;">
+                        <svg class="service-card__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                            stroke-width="1.5">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M10.5 1.5H8.25A2.25 2.25 0 006 3.75v16.5a2.25 2.25 0 002.25 2.25h7.5A2.25 2.25 0 0018 20.25V3.75a2.25 2.25 0 00-2.25-2.25H13.5m-3 0V3h3V1.5m-3 0h3m-3 18.75h3" />
+                        </svg>
+                        <h3>Mobile App Development</h3>
+                        <p>Native-feel iOS and Android experiences architected for speed and user retention.</p>
+                        <span class="service-card__link">Learn more <svg viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd"
+                                    d="M3 10a.75.75 0 01.75-.75h10.638L10.23 5.29a.75.75 0 111.04-1.08l5.5 5.25a.75.75 0 010 1.08l-5.5 5.25a.75.75 0 11-1.04-1.08l4.158-3.96H3.75A.75.75 0 013 10z"
+                                    clip-rule="evenodd" />
+                            </svg></span>
+                    </a>
+
+                    <a href="#contact" class="service-card reveal" style="transition-delay: 200ms;">
+                        <svg class="service-card__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                            stroke-width="1.5">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M9.53 16.122a3 3 0 00-5.78 1.128 2.25 2.25 0 01-2.4 2.245 4.5 4.5 0 008.4-2.245c0-.399-.078-.78-.22-1.128zm0 0a15.998 15.998 0 003.388-1.62m-5.043-.025a15.994 15.994 0 011.622-3.395m3.42 3.42a15.995 15.995 0 004.764-4.648l3.879-3.879a3 3 0 10-4.242-4.242l-3.879 3.879a15.998 15.998 0 00-4.648 4.764m3.897 4.09l1.414 1.414" />
+                        </svg>
+                        <h3>UI/UX Design & Prototyping</h3>
+                        <p>Converting pencil sketches into pixel-perfect, human-centric enterprise interfaces.</p>
+                        <span class="service-card__link">Learn more <svg viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd"
+                                    d="M3 10a.75.75 0 01.75-.75h10.638L10.23 5.29a.75.75 0 111.04-1.08l5.5 5.25a.75.75 0 010 1.08l-5.5 5.25a.75.75 0 11-1.04-1.08l4.158-3.96H3.75A.75.75 0 013 10z"
+                                    clip-rule="evenodd" />
+                            </svg></span>
+                    </a>
+
+                    <a href="#contact" class="service-card reveal" style="transition-delay: 300ms;">
+                        <svg class="service-card__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                            stroke-width="1.5">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244" />
+                        </svg>
+                        <h3>API Dev & Integration</h3>
+                        <p>Robust backend solutions and seamless integrations to connect your digital ecosystem.</p>
+                        <span class="service-card__link">Learn more <svg viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd"
+                                    d="M3 10a.75.75 0 01.75-.75h10.638L10.23 5.29a.75.75 0 111.04-1.08l5.5 5.25a.75.75 0 010 1.08l-5.5 5.25a.75.75 0 11-1.04-1.08l4.158-3.96H3.75A.75.75 0 013 10z"
+                                    clip-rule="evenodd" />
+                            </svg></span>
+                    </a>
+
+                    <a href="#contact" class="service-card reveal" style="transition-delay: 400ms;">
+                        <svg class="service-card__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                            stroke-width="1.5">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
+                        </svg>
+                        <h3>E-Commerce Solutions</h3>
+                        <p>Custom storefronts and payment gateways optimized for high conversion rates.</p>
+                        <span class="service-card__link">Learn more <svg viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd"
+                                    d="M3 10a.75.75 0 01.75-.75h10.638L10.23 5.29a.75.75 0 111.04-1.08l5.5 5.25a.75.75 0 010 1.08l-5.5 5.25a.75.75 0 11-1.04-1.08l4.158-3.96H3.75A.75.75 0 013 10z"
+                                    clip-rule="evenodd" />
+                            </svg></span>
+                    </a>
+
+                    <a href="#contact" class="service-card reveal" style="transition-delay: 500ms;">
+                        <svg class="service-card__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                            stroke-width="1.5">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M3.75 3v11.25A2.25 2.25 0 006 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0118 16.5h-2.25m-7.5 0h7.5m-7.5 0l-1 3m8.5-3l1 3m0 0l.5 1.5m-.5-1.5h-9.5m0 0l-.5 1.5M9 11.25v1.5M12 9v3.75m3-6v6" />
+                        </svg>
+                        <h3>Tech Consulting & Strategy</h3>
+                        <p>Aligning your business goals with the right technology stack for sustainable scaling.</p>
+                        <span class="service-card__link">Learn more <svg viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd"
+                                    d="M3 10a.75.75 0 01.75-.75h10.638L10.23 5.29a.75.75 0 111.04-1.08l5.5 5.25a.75.75 0 010 1.08l-5.5 5.25a.75.75 0 11-1.04-1.08l4.158-3.96H3.75A.75.75 0 013 10z"
+                                    clip-rule="evenodd" />
+                            </svg></span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section class="about" id="about">
+            <div class="container about__grid">
+                <div class="about__content reveal">
+                    <span class="about__eyebrow">The Mind Behind Zentrix</span>
+                    <h2>Built by a founder who codes.</h2>
+                    <p>When you work with Zentrix, you aren't handed off to a junior account manager. You partner with
+                        engineering leadership from day one.</p>
+                    <p>Our philosophy is simple: software should feel like a crafted product, not a generic commodity.
+                        We bring the meticulous nature of a premium design studio to the rigorous world of enterprise IT
+                        infrastructure.</p>
+                    <p>Whether you're validating an MVP or scaling to thousands of users, we architect solutions that
+                        are beautiful inside and out.</p>
+
+                    <span class="about__signature font-caveat">Majose</span>
+
+                    <div class="about__stats">
+                        <div>1+ Years Experience</div> <span>·</span>
+                        <div>3+ Projects</div> <span>·</span>
+                        <div>100% Client Focused</div>
+                    </div>
+                </div>
+
+                <div class="about__image-wrapper reveal" style="transition-delay: 200ms;">
+                    <div class="about__image">
+                        <span>Portrait Placeholder</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="trust">
+            <div class="container trust__grid">
+                <div class="trust__item reveal">
+                    <svg class="trust__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M11.42 15.17L17.25 21A2.652 2.652 0 0021 17.25l-5.877-5.877M11.42 15.17l2.492-3.053c.24-.294.487-.594.735-.898A5.967 5.967 0 0015 8.25a5.969 5.969 0 00-5.982-5.982 5.967 5.967 0 00-2.983.799C5.733 3.315 5.438 3.56 5.143 3.8M11.42 15.17l-3.053 2.492c-.294.24-.594.487-.898.735A5.967 5.967 0 018.25 15a5.969 5.969 0 01-5.982-5.982 5.967 5.967 0 01.799-2.983c.248-.292.493-.587.735-.882m7.618 10.051l-4.57 1.096m4.57-1.096l1.096-4.57m-5.666 3.474l-4.57 1.096m4.57-1.096l1.096-4.57" />
+                    </svg>
+                    <h3>Founder-Led Quality</h3>
+                    <p>You deal directly with the engineer architecting your product, ensuring nothing is lost in
+                        translation between business goals and technical execution.</p>
+                </div>
+                <div class="trust__item reveal" style="transition-delay: 100ms;">
+                    <svg class="trust__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
+                    <h3>Transparent Process</h3>
+                    <p>Clear milestones, no surprise invoices, and weekly updates. We believe enterprise-grade software
+                        requires enterprise-grade communication.</p>
+                </div>
+                <div class="trust__item reveal" style="transition-delay: 200ms;">
+                    <svg class="trust__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z" />
+                    </svg>
+                    <h3>Built to Scale</h3>
+                    <p>We write code architected for growth. We don't just deliver an MVP; we lay the foundation for a
+                        platform that can handle your future success.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="cta" id="contact">
+            <div class="container reveal">
+                <h2>Ready to Build Something Great?</h2>
+                <p>Let's discuss how Zentrix can turn your vision into a robust, scalable digital reality. No pressure,
+                    just a conversation about technology.</p>
+
+                <div class="cta__buttons">
+                    <a href="https://wa.me/6379961052" target="_blank" rel="noopener noreferrer"
+                        class="btn btn--whatsapp">
+                        <svg style="width: 20px; height: 20px; margin-right: 8px;" fill="currentColor"
+                            viewBox="0 0 24 24">
+                            <path
+                                d="M12.031 0C5.383 0 0 5.383 0 12.031c0 2.12.553 4.186 1.602 6L.231 24l6.126-1.608A11.96 11.96 0 0012.031 24c6.648 0 12.031-5.383 12.031-12.031S18.679 0 12.031 0zm3.84 17.26c-.164.464-.95 .898-1.32.936-.37.04-1.22-.058-3.414-.959-2.651-1.087-4.35-3.805-4.482-3.982-.132-.178-1.07-1.424-1.07-2.716s.672-1.928.913-2.188c.241-.26.523-.326.697-.326.173 0 .346.002.502.01.164.009.387-.066.608.468.225.545.748 1.82.814 1.952.066.132.11.286.022.464-.088.178-.132.286-.264.44-.132.155-.278.337-.396.464-.132.146-.275.305-.12.571.155.267.688 1.137 1.478 1.84.996.883 1.84 1.155 2.105 1.287.264.132.418.11.572-.065.155-.177.672-.782.85-1.048.178-.268.354-.223.596-.132.241.09 1.536.724 1.798.855.264.132.44.198.506.308.066.11.066.64-.098 1.104z" />
+                        </svg>
+                        Chat on WhatsApp
+                    </a>
+
+                    <a href="https://mail.google.com/mail/u/0/?view=cm&fs=1&to=sahayamajose@gmail.com" target="_blank" rel="noopener noreferrer" class="btn btn--cream-ghost"> <svg
+                            style="width: 20px; height: 20px; margin-right: 8px;" fill="none" stroke="currentColor"
+                            viewBox="0 0 24 24" stroke-width="1.5">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
+                        </svg>
+                        Send an Email
+                    </a>
+                </div>
+                <span class="cta__note">Typically responds within 2 hours during IST business hours.</span>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer__grid">
+                <div class="footer__col">
+                    <span class="footer__logo-text">Zentrix</span>
+                    <p class="footer__tagline">Software • Technology • Solutions</p>
+                </div>
+
+                <div class="footer__col">
+                    <h4>Company</h4>
+                    <ul class="footer__links">
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#services">Services</a></li>
+                        <li><a href="#about">About Founder</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer__col">
+                    <h4>Connect</h4>
+                    <ul class="footer__links">
+                        <li><a href="#contact">Contact Us</a></li>
+                        <li><a href="#">LinkedIn</a></li>
+                        <li><a href="#">GitHub</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer__bottom">
+                <p>&copy; 2024 Zentrix. All rights reserved.</p>
+                <p>Built with ♥ in Nagercoil, India</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            // 1. Scroll Active States & Navbar Shrink
+            const navbar = document.getElementById('navbar');
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('.navbar__link');
+
+            window.addEventListener('scroll', () => {
+                // Navbar border & background blur
+                if (window.scrollY > 80) {
+                    navbar.classList.add('scrolled');
+                } else {
+                    navbar.classList.remove('scrolled');
+                }
+
+                // Highlight active link based on scroll
+                let current = '';
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    const sectionHeight = section.clientHeight;
+                    if (pageYOffset >= (sectionTop - 200)) {
+                        current = section.getAttribute('id');
+                    }
+                });
+
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href').includes(current)) {
+                        link.classList.add('active');
+                    }
+                });
+            });
+
+            // 2. Mobile Menu Toggle
+            const mobileBtn = document.getElementById('mobile-menu-btn');
+            const navMenu = document.getElementById('nav-links');
+
+            mobileBtn.addEventListener('click', () => {
+                mobileBtn.classList.toggle('open');
+                navMenu.classList.toggle('active');
+                document.body.style.overflow = navMenu.classList.contains('active') ? 'hidden' : '';
+            });
+
+            // Close mobile menu on link click
+            navLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileBtn.classList.remove('open');
+                    navMenu.classList.remove('active');
+                    document.body.style.overflow = '';
+                });
+            });
+
+            // 3. Scroll Reveal Animations (Intersection Observer)
+            const revealElements = document.querySelectorAll('.reveal');
+
+            const revealObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                        observer.unobserve(entry.target); // Run once
+                    }
+                });
+            }, {
+                threshold: 0.15,
+                rootMargin: "0px 0px -50px 0px"
+            });
+
+            revealElements.forEach(el => revealObserver.observe(el));
+        });
+    </script>
+</body>
+
+</html>
